@@ -1,0 +1,179 @@
+*{box-sizing:border-box}body{font-family:system-ui,Arial,sans-serif;background:#f4f6fa;color:#1c2a3c;margin:0}main{max-width:1800px;padding:25px;margin:auto}header h1{margin:0}header p{color:#5d697a}.toolbar{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:20px 0}.toolbar label{display:flex;flex-direction:column;gap:5px;font-size:14px}.toolbar .check{flex-direction:row;align-items:center;padding-bottom:9px}input,select,button{font:inherit}input:not([type=checkbox]),select{padding:9px;border:1px solid #cbd3e1;border-radius:6px;background:#fff}button{padding:10px 14px;background:#245cc7;color:white;border:0;border-radius:6px;cursor:pointer}.columns-config{background:#fff;border:1px solid #d4dbe8;border-radius:8px;margin-bottom:12px;padding:11px}.columns-config summary{cursor:pointer;font-weight:600}#columns{display:flex;gap:12px 18px;flex-wrap:wrap;padding:14px 2px 4px}.column-option{font-size:13px;white-space:nowrap}.panels{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}.panel{background:white;min-width:0;border:1px solid #d8dfeb;border-radius:10px;padding:14px;box-shadow:0 2px 8px #122c4909}.panel h2{font-size:18px;margin:0 0 12px}.panel>label{display:block;font-size:13px;margin-bottom:5px}.panel select{width:100%}.meta{display:flex;justify-content:space-between;gap:8px;color:#52627a;font-size:12px;padding:10px 0}.table-wrap{overflow:auto;max-height:68vh;border:1px solid #e0e5ee;border-radius:6px}.file-table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}.file-table th,.file-table td{padding:9px 10px;text-align:left;border-bottom:1px solid #edf0f5}.file-table th{position:sticky;top:0;background:#eaf0fa;color:#263a57;z-index:1}.file-table tbody tr{cursor:pointer}.file-table tbody tr:hover{background:#f1f6ff}.file-table tbody tr.selected{background:#d6e6ff}.filename{font-weight:500}#status{min-height:1.3em;color:#385274;font-size:14px}@media(max-width:960px){.panels{grid-template-columns:1fr}.table-wrap{max-height:48vh}}
+.panel select{cursor:pointer;appearance:none;background:#fff;padding-right:30px;background-image:linear-gradient(45deg,transparent 50%,#496582 50%),linear-gradient(135deg,#496582 50%,transparent 50%);background-position:calc(100% - 18px) center,calc(100% - 13px) center;background-size:5px 5px;background-repeat:no-repeat}dialog{width:min(550px,95vw);max-height:80vh;border:1px solid #cbd5e1;border-radius:12px;padding:20px;box-shadow:0 20px 55px #14223955}dialog::backdrop{background:#1c2a3c77}.dialog-heading{display:flex;align-items:center;justify-content:space-between}.dialog-heading h2{margin:0}.dialog-heading button{padding:5px 12px}#folder-dialog-hint{font-size:13px;color:#57667b}.folder-breadcrumb{padding:11px;background:#eff4fa;border-radius:6px;overflow-wrap:anywhere;margin:10px 0}.folder-entries{height:min(42vh,330px);overflow:auto;border:1px solid #dbe3ed;padding:6px;border-radius:8px}.folder-entry{display:block;width:100%;background:white;color:#233955;text-align:left;border-radius:4px;padding:12px;margin:2px 0}.folder-entry:hover,.folder-entry:focus{background:#e6efff}.folder-entry.parent{color:#425b83}.folder-entries p{color:#697b90;font-size:13px;padding:8px}.dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:16px}.secondary{background:#e8edf5;color:#233955}
+
+/* Version 4: accessible real button instead of a single-option select. */
+.panel .folder-picker{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;background:#fff;color:#233955;text-align:left;border:1px solid #cbd3e1;border-radius:6px;padding:10px 12px;cursor:pointer;font-weight:400}
+.panel .folder-picker:hover,.panel .folder-picker:focus-visible{border-color:#245cc7;background:#f4f8ff;outline-offset:2px}
+
+.panel select[id^="drive-"]{display:block;width:100%;margin:0 0 14px;background-color:#fff;color:#233955;min-height:40px} 
+.panel .folder-picker{margin-top:4px}
+
+/* Version 6: independent wildcard filename filters below the folder selectors. */
+.panel .panel-file-filter{display:block;width:100%;margin:4px 0 6px;min-height:40px}
+.panel .folder-picker{margin-bottom:14px}
+
+/* Version 7: multi-selection, independent for each panel. */
+.file-table .selection-column{width:39px;min-width:39px;text-align:center;padding:7px 8px}
+.file-table input.file-select,.file-table input[id^="select-all-"]{width:17px;height:17px;vertical-align:middle;cursor:pointer;accent-color:#245cc7}
+.file-table tbody tr.selected{background:#d6e6ff}
+.meta span[id^="selected-count-"]{font-weight:600;color:#245cc7;white-space:nowrap}
+
+/* Version 8: occupy viewport and keep the actionbar visible below independently scrolling tables. */
+html,body{min-height:100%;height:100%}
+body{overflow:hidden}
+main{height:100dvh;min-height:480px;max-width:none;display:flex;flex-direction:column;overflow:hidden;padding:14px 20px;gap:8px}
+header{flex:none}header h1{font-size:25px}header p{margin:5px 0}
+.toolbar{flex:none;margin:4px 0;gap:8px}.toolbar input:not([type=checkbox]){max-width:170px}
+.columns-config{flex:none;margin:0;padding:8px 11px}#status{flex:none;margin:0;min-height:1.25em}
+.panels{flex:1;min-height:0;grid-template-columns:repeat(2,minmax(0,1fr))}
+.panel{display:flex;flex-direction:column;min-height:0;padding:11px}
+.panel h2{margin:0 0 6px}.panel select[id^="drive-"]{margin-bottom:7px}
+.panel .folder-picker{margin:0 0 7px}.panel .panel-file-filter{margin:2px 0 3px}
+.panel .meta{flex:none;padding:5px 0;min-height:26px}
+.table-wrap{flex:1;min-height:0;max-height:none;overflow:auto;overscroll-behavior:contain}
+.actionbar{flex:none;background:#fff;border:1px solid #d4dbe8;border-radius:9px;padding:10px 13px;display:flex;flex-direction:column;gap:8px;box-shadow:0 2px 8px #122c4909}
+.actionbar-title{display:flex;justify-content:space-between;gap:12px;align-items:center}.actionbar-title span{font-size:13px;color:#53637b}
+.action-buttons{display:flex;align-items:end;gap:9px;flex-wrap:wrap}
+.action-buttons label{display:flex;flex-direction:column;font-size:12px;gap:3px}.action-buttons select{min-width:105px;padding:8px}
+.action-buttons button{padding:9px 13px}.action-buttons button.danger{background:#b42332}
+.action-hint{font-size:12px;color:#59697a}
+@media(max-width:960px){body{overflow:auto}main{height:auto;min-height:100dvh;overflow:visible}.panels{grid-template-columns:1fr;min-height:700px}.panel{min-height:340px}.table-wrap{min-height:190px;max-height:40vh}}
+
+/* Version 9: Per-panel column picker available from panel title and column headers. */
+.panel h2 .panel-heading{display:flex;justify-content:space-between;align-items:center;width:100%;border:0;border-radius:5px;background:#eaf0fa;color:#233955;text-align:left;font-size:18px;font-weight:700;padding:7px 10px}
+.panel h2 .panel-heading:hover,.panel h2 .panel-heading:focus-visible{background:#d6e6ff;outline:2px solid #245cc7;outline-offset:1px}
+.file-table th.editable-column-header{cursor:pointer}
+.file-table th.editable-column-header:hover{background:#d6e6ff}
+.column-dialog-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 16px;margin:14px 0;max-height:45vh;overflow-y:auto}
+.column-dialog-options .column-option{display:flex;gap:7px;align-items:center;white-space:normal;font-size:14px;cursor:pointer}
+#column-dialog{width:min(610px,95vw)}
+@media(max-width:530px){.column-dialog-options{grid-template-columns:1fr}}
+
+/* Per-panel three-state column sorting; column configuration stays on panel heading. */
+.file-table th.sortable-column-header{padding:0}
+.file-table .column-sort-button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:9px 10px;border:0;border-radius:0;background:transparent;color:inherit;font:inherit;font-weight:600;text-align:left;white-space:nowrap;cursor:pointer}
+.file-table .column-sort-button:hover{background:#d6e6ff}
+.file-table .column-sort-button:focus-visible{outline:2px solid #245cc7;outline-offset:-2px}
+.file-table .sort-indicator{color:#506b92;font-size:11px}
+.file-table th[aria-sort="ascending"] .sort-indicator,.file-table th[aria-sort="descending"] .sort-indicator{color:#1646a0}
+
+/* Independent inverse wildcard filter control for each panel. */
+.panel .panel-filter-invert{display:flex;align-items:center;gap:7px;margin:4px 0 6px;font-size:13px;cursor:pointer;width:fit-content}
+.panel .panel-filter-invert input{margin:0;accent-color:#245cc7}
+
+/* Unabhängige, explizit anwendbare Filter für beide Panels */
+.panel-filter-row{display:flex;align-items:stretch;gap:7px;width:100%}
+.panel-filter-row .panel-file-filter{flex:1;min-width:0;margin:2px 0 3px}
+.panel-filter-row .panel-filter-apply{flex:0 0 auto;margin:2px 0 3px;padding:0 12px}
+
+/* Per-panel batch rename action in each panel heading */
+.panel > h2 {display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.panel .remove-name-text {font-size:0.8rem;padding:6px 10px;white-space:normal;min-height:30px;}
+
+/* Permanent text field and action button for batch name removal per panel. */
+.panel .panel-heading{min-width:125px;flex:1 1 150px;}
+.panel .panel-rename-controls{display:flex;gap:6px;align-items:center;flex:2 1 300px;min-width:0;}
+.panel .remove-name-input{flex:1 1 125px;min-width:85px;width:100%;box-sizing:border-box;margin:0;padding:6px 8px;font-size:0.85rem;}
+.panel .remove-name-text{flex:0 0 auto;}
+@media(max-width:600px){.panel .panel-rename-controls{flex-wrap:wrap}.panel .remove-name-text{flex:1 0 auto}}
+
+/* Explizite, jederzeit sichtbare Spaltenauswahl getrennt je Panel. */
+.panel h2 .panel-heading{display:inline-block;flex:0 0 auto;min-width:0;width:auto;background:transparent;border:0;outline:0;padding:4px 2px;cursor:default;}
+.panel h2 .panel-heading:hover,.panel h2 .panel-heading:focus-visible{background:transparent;outline:0;}
+.panel h2 .panel-columns-button{flex:0 0 auto;background:#eaf0fa;color:#233955;border:1px solid #b7c9e8;border-radius:5px;padding:7px 9px;font-size:13px;font-weight:600;white-space:nowrap;}
+.panel h2 .panel-columns-button:hover{background:#d6e6ff;}
+.panel h2 .panel-columns-button:focus-visible{outline:2px solid #245cc7;outline-offset:2px;}
+
+/* Filteroptionen und Spaltenauswahl nebeneinander, pro Panel */
+.panel .panel-filter-options{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:4px 0 6px}
+.panel .panel-filter-options .panel-filter-invert{margin:0}
+.panel .panel-filter-options .panel-columns-button{flex:0 0 auto;background:#eaf0fa;color:#233955;border:1px solid #b7c9e8;border-radius:5px;padding:7px 9px;font-size:13px;font-weight:600;white-space:nowrap}
+.panel .panel-filter-options .panel-columns-button:hover{background:#d6e6ff}
+.panel .panel-filter-options .panel-columns-button:focus-visible{outline:2px solid #245cc7;outline-offset:2px}
+
+.panel .panel-filter-options .panel-recursive{margin:0;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+
+/* Konfliktdialog für Kopieren/Verschieben */
+.transfer-dialog{width:min(900px,94vw);max-height:88vh;padding:22px;border:1px solid #b7c9e8;border-radius:10px}
+.transfer-dialog #transfer-policy{width:100%;max-width:560px;margin:8px 0}
+.transfer-dialog .transfer-note{font-size:13px;color:#475569}
+.transfer-dialog #transfer-summary{font-weight:600;margin:12px 0}
+.transfer-table-wrap{overflow:auto;max-height:43vh;border:1px solid #d4dce8;border-radius:5px}
+.transfer-table{border-collapse:collapse;width:100%;font-size:13px}
+.transfer-table th,.transfer-table td{padding:7px 9px;border-bottom:1px solid #e2e8f0;text-align:left;overflow-wrap:anywhere}
+.transfer-table th{position:sticky;top:0;background:#eef3fb}
+
+/* Kontextbezogene Hilfe – visuell klein, per Tastatur und Screenreader erreichbar. */
+.files-help-trigger{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:23px;height:23px;min-width:23px;padding:0;border:1px solid #95a9c4;border-radius:50%;background:#edf4ff;color:#17457d;font-size:14px;font-weight:700;line-height:1;cursor:pointer;vertical-align:middle}
+.files-help-trigger:hover{background:#d9e9ff;border-color:#376caa}
+.files-help-trigger:focus-visible{outline:2px solid #205cc7;outline-offset:2px}
+.files-help-dialog{width:min(660px,94vw);max-height:85vh;overflow:auto;border:1px solid #b7c9e8;border-radius:10px;padding:20px 23px;background:#fff;color:#202f45;box-shadow:0 14px 60px #172e4c44}
+.files-help-dialog::backdrop{background:#101c31a6}
+.files-help-body{line-height:1.55;font-size:14px;overflow-wrap:anywhere}
+.files-help-body p{margin:10px 0}
+.files-help-body ul{margin:8px 0 14px;padding-left:24px}
+.files-help-body li{margin:5px 0}
+.files-help-body code{padding:1px 4px;border-radius:4px;background:#eff3f9}
+.files-help-dialog .dialog-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.files-help-dialog .dialog-heading h2{margin:0;font-size:19px}
+.files-help-dialog .dialog-actions{display:flex;justify-content:flex-end;margin-top:14px}
+.panel > .files-help-trigger,.panel .meta .files-help-trigger{margin-left:6px}
+.panel .panel-filter-options{gap:8px}
+.panel .panel-filter-options .files-help-trigger{margin-right:3px}
+.panel .panel-rename-controls .files-help-trigger{margin-left:0}
+.actionbar-title .files-help-trigger{margin-left:auto}
+.toolbar .files-help-trigger{align-self:center}
+header > .files-help-trigger{margin-left:10px}
+
+/* Folder rows are navigable but never selectable for file operations. */
+.file-table .directory-row{background:#f3f7fc;color:#254d78;cursor:default}
+.file-table .directory-row:hover{background:#e4efff}
+.file-table .directory-row .filename{font-weight:650}
+.file-table .directory-row .folder-row-icon{font-size:14px}
+
+/* Ordnerauswahl: Dateieinträge sind nur lesbar und nicht navigierbar. */
+.folder-entry.picker-file{background:#f4f6f9;color:#5c6878;cursor:default;padding:9px 12px;overflow-wrap:anywhere}
+.folder-contents-summary{font-weight:600;border-bottom:1px solid #dbe3ed;margin:0 0 5px;padding:8px 10px}
+#folder-confirm:disabled{opacity:.45;cursor:not-allowed}
+
+/* Navigation to the parent directory stays visible regardless of the filename filter. */
+.parent-directory-row{cursor:pointer;background:#edf3fb;font-weight:600}
+.parent-directory-row:hover,.parent-directory-row:focus{background:#dae8fb}
+.folder-entry.picker-file{display:block!important;opacity:1!important;visibility:visible!important}
+
+/* V2 private trash and audit dialogs */
+#trash-dialog,#audit-dialog{width:min(850px,94vw);max-height:85vh;overflow:auto;}
+.trash-entry{display:flex;justify-content:space-between;align-items:center;gap:1rem;border-bottom:1px solid #ccc;padding:.55rem 0;overflow-wrap:anywhere;}
+.trash-entry span{flex:1;min-width:0;}
+.audit-rows{max-height:55vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;}
+
+/* V3: advanced duplicate review */
+.duplicate-dialog {width:min(820px,94vw);max-height:88vh;}
+.duplicate-options{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0;}
+.duplicate-results{max-height:42vh;overflow:auto;margin-top:12px;}
+.duplicate-group{border:1px solid #bbb;border-radius:6px;padding:10px;margin-bottom:8px;overflow-wrap:anywhere;}
+.duplicate-group div{font-size:.88rem;margin-top:4px;}
+
+/* Version 4: navigation, preview, and cancellable top-level transfer queue */
+.v4-navigation{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:8px 0}
+.v4-navigation button,.v4-navigation select{font-size:.84rem;padding:5px 8px;max-width:220px}
+.v4-navigation select{flex:1;min-width:110px}
+.v4-progress{display:grid;gap:8px;padding:12px;border:1px solid #94a3b8;border-radius:8px;margin:10px 0}
+.v4-progress progress{width:100%;height:16px}
+.v4-progress small{font-size:.8rem;opacity:.8}
+.v4-preview-dialog{width:min(760px,95vw);max-height:85vh}
+#file-preview-content{max-height:55vh;overflow:auto}
+.v4-preview-text{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.5 ui-monospace,Consolas,monospace}
+.v4-preview-image{display:block;max-width:100%;max-height:52vh;margin:auto;object-fit:contain}
+
+#panel-left.v4-drop-target,#panel-right.v4-drop-target{outline:3px dashed #2563eb;outline-offset:-4px;background:rgba(37,99,235,.08)}
+
+/* V5 */
+#v5-dialog{max-width:min(95vw,650px);width:550px;}
+#v5-dialog-body{display:grid;gap:10px;max-height:65vh;overflow:auto;}
+#v5-dialog-body input,#v5-dialog-body select{max-width:100%;padding:8px;}
+
+/* Native [hidden] must override display:grid in the transfer dialog. */
+.transfer-dialog [hidden]{display:none!important}
+.transfer-dialog button:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.45)}
+.transfer-dialog #transfer-summary{white-space:pre-wrap;overflow-wrap:anywhere}

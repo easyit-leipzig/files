@@ -1,0 +1,28 @@
+.files-batch-rename { border: 1px solid #b7c2d1; background: #fafbfe; color: #1d293b; border-radius: 8px; padding: 12px; margin: 12px 0; font: 14px/1.5 system-ui,sans-serif; }
+.files-batch-rename[hidden] { display: none !important; }
+.files-batch-rename .fbr-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.files-batch-rename .fbr-head button { border: 0; background: transparent; font-size: 24px; cursor: pointer; }
+.files-batch-rename label { display: grid; gap: 4px; font-weight: 600; }
+.files-batch-rename input { border: 1px solid #91a3b8; border-radius: 4px; font: inherit; padding: 6px; max-width: 100%; box-sizing: border-box; }
+.files-batch-rename [data-fbr="pattern"] { width: 100%; }
+.files-batch-rename .fbr-settings { display: flex; gap: 14px; margin: 9px 0; flex-wrap: wrap; }
+.files-batch-rename .fbr-settings input { width: 120px; }
+.files-batch-rename .fbr-help { color: #42536a; font-size: 12px; margin: 5px 0 12px; }
+.files-batch-rename .fbr-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.files-batch-rename button { cursor: pointer; padding: 7px 11px; border: 1px solid #8098b0; border-radius: 4px; background: #ecf3fb; color: #1d293b; }
+.files-batch-rename button:disabled { opacity: .45; cursor: not-allowed; }
+.files-batch-rename .fbr-message { margin: 8px 0; min-height: 20px; }
+.files-batch-rename .fbr-error { color: #aa1e20; }
+.files-batch-rename .fbr-table-wrap { overflow: auto; max-height: 270px; }
+.files-batch-rename table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.files-batch-rename th,.files-batch-rename td { padding: 5px 8px; text-align: left; border-bottom: 1px solid #d8e0ea; }
+.files-batch-rename td { overflow-wrap: anywhere; }
+.files-batch-rename .fbr-unchanged { opacity: .55; }
+
+/* Eingebunden in den bestehenden 2-Panel-Dateimanager. */
+#batch-rename-dialog { width:min(900px,95vw); max-height:90vh; overflow:auto; padding:0; border:0; border-radius:11px; }
+#batch-rename-dialog::backdrop { background:#1c2a3c9c; }
+#batch-rename-dialog .files-batch-rename { border:0; background:#fff; padding:20px; margin:0; }
+#batch-rename-dialog .fbr-table-wrap { max-height:min(42vh,400px); }
+.panel .panel-filter-options .panel-batch-rename {background:#eaf0fa;color:#233955;border:1px solid #b7c9e8;border-radius:5px;padding:7px 9px;font-size:13px;font-weight:600;}
+.panel .panel-filter-options .panel-batch-rename:hover {background:#d6e6ff;}
